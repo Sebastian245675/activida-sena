@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro e Inicio de Sesión</title>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+</head>
+<body>
+    <style>/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* Contenedor principal */
+.container {
+    width: 100%;
+    max-width: 400px;
+    background: white;
+    padding: 20px;
+    margin: 50px auto;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Títulos */
+h2, h3 {
+    color: #333;
+}
+
+/* Campos de entrada */
+input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Botones */
+button {
+    width: 95%;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #28a745;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+/* Mensajes */
+p {
+    font-size: 14px;
+    color: #d9534f;
+    font-weight: bold;
+}</style>
+    <h2>Registro e Inicio de Sesión</h2>
+
+    <!-- Formulario de Registro -->
+    <h3>Registro</h3>
+    <input type="email" id="registerEmail" placeholder="Correo">
+    <input type="password" id="registerPassword" placeholder="Contraseña">
+    <button onclick="register()">Registrar</button>
+    <p id="registerMessage"></p>
+
+    <!-- Formulario de Inicio de Sesión -->
+    <h3>Iniciar Sesión</h3>
+    <input type="email" id="loginEmail" placeholder="Correo">
+    <input type="password" id="loginPassword" placeholder="Contraseña">
+    <button onclick="login()">Iniciar Sesión</button>
+    <p id="loginMessage"></p>
+
+    <script>
+        // Configuración de Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyB0gh9Hq5JXTEmeqvsJHLVQULdH1W7YffM",
+            authDomain: "nexus-5c53d.firebaseapp.com",
+            projectId: "nexus-5c53d",
+            storageBucket: "nexus-5c53d.appspot.com",
+            messagingSenderId: "208164583979",
+            appId: "1:208164583979:web:8fd62a5c315fe50ad7486e",
+            measurementId: "G-WENGRWS7N9"
+        };
+
+        // Inicializar Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // Función para registrar un usuario
+        function register() {
+            const email = document.getElementById("registerEmail").value;
+            const password = document.getElementById("registerPassword").value;
+
+            auth.createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    document.getElementById("registerMessage").innerText = "Registro exitoso";
+                })
+                .catch((error) => {
+                    document.getElementById("registerMessage").innerText = "Error: " + error.message;
+                });
+        }
+
+        // Función para iniciar sesión
+        function login() {
+            const email = document.getElementById("loginEmail").value;
+            const password = document.getElementById("loginPassword").value;
+
+            auth.signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    document.getElementById("loginMessage").innerText = "Autenticación satisfactoria";
+                })
+                .catch((error) => {
+                    document.getElementById("loginMessage").innerText = "Error en la autenticación: " + error.message;
+                });
+        }
+    </script>
+</body>
+</html>
